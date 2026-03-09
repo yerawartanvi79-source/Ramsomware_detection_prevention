@@ -1,0 +1,11 @@
+flask
+flask-cors
+tensorflow-cpu
+numpy
+pandas
+scikit-learn
+joblib
+gunicorn
+requests
+psutil
+watchdog
