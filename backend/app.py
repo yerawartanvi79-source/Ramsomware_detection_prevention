@@ -17,6 +17,10 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+# ── BASE DIRECTORY ────────────────────────────────────────────
+# Resolves to project root regardless of where gunicorn is launched from
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 # ── MODEL LOADER ─────────────────────────────────────────────
 
 class ModelServer:
@@ -30,8 +34,15 @@ class ModelServer:
     def _load(self):
         try:
             import tensorflow as tf
-            model_path  = "model/ransomware_lstm_model.keras"
-            scaler_path = "model/scaler.pkl"
+
+            # ✅ Absolute paths — works on Railway
+            model_path  = os.path.join(BASE_DIR, "model", "ransomware_lstm_model.keras")
+            scaler_path = os.path.join(BASE_DIR, "model", "scaler.pkl")
+
+            if not os.path.exists(model_path):
+                print(f"  Model file not found at: {model_path}")
+                self.loaded = False
+                return
 
             self.model = tf.keras.models.load_model(model_path)
 
@@ -204,7 +215,8 @@ def clear_alerts():
 
 @app.route("/logs")
 def get_logs():
-    log_path = "logs/detections.jsonl"
+    # ✅ Absolute path — works on Railway
+    log_path = os.path.join(BASE_DIR, "logs", "detections.jsonl")
     if not os.path.exists(log_path):
         return ok({"logs": [], "total": 0})
     with open(log_path) as f:
@@ -220,19 +232,18 @@ def get_logs():
 
 @app.route("/simulate/benign")
 def sim_benign():
-    # Real benign disk I/O values (low, regular patterns)
-    single = [100000, 4096, 1, 200, 2, 10000]
-    features = single * 100  # 100 timesteps
-    result = model_server.predict(features)
+    single   = [100000, 4096, 1, 200, 2, 10000]
+    features = single * 100
+    result   = model_server.predict(features)
     return ok({"type": "benign_simulation", "prediction": result})
 
 @app.route("/simulate/ransom")
 def sim_ransom():
-    # Real ransomware disk I/O values (high, aggressive patterns)
-    single = [999999999, 999999, 255, 999999, 32, 99999999]
-    features = single * 100  # 100 timesteps
-    result = model_server.predict(features)
+    single   = [999999999, 999999, 255, 999999, 32, 99999999]
+    features = single * 100
+    result   = model_server.predict(features)
     return ok({"type": "ransomware_simulation", "prediction": result})
+
 @app.route("/model/info")
 def model_info():
     if not model_server.loaded:
@@ -257,13 +268,14 @@ def server_error(e):
     return err(f"Server error: {e}", 500)
 
 if __name__ == "__main__":
-    os.makedirs("logs", exist_ok=True)
+    os.makedirs(os.path.join(BASE_DIR, "logs"), exist_ok=True)
     port = int(os.environ.get("PORT", 5000))
 
     print("=" * 50)
     print("  RANSAP DETECTION — BACKEND API v2.0")
     print("=" * 50)
     print(f"  Model loaded : {model_server.loaded}")
+    print(f"  Base dir     : {BASE_DIR}")
     print(f"  Dataset      : RanSAP 2022 (Cerber)")
     print(f"  Port         : {port}")
     print()
