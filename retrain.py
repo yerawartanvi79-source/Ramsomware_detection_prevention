@@ -220,7 +220,7 @@ def retrain(wannacry_folder: str):
         validation_split=0.1,
         epochs=30,
         batch_size=64,
-        callbacks=callbacks,
+        callbacks=callbacks, 
         class_weight={0: 1.0, 1: 1.5},
         verbose=1,
     )

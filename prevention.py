@@ -21,14 +21,14 @@ PROTECTED = {
 # Keywords that suggest ransomware process
 SUSPICIOUS_KEYWORDS = [
     "encrypt", "ransom", "crypt", "locker",
-    "cipher", "wannacry", "wncry",
+    "cipher", "wannacry", "wncry", "teslacrypt", "cerber", "locky",
 ]
 
 
 def stop_encryption():
     """
     Scan running processes and kill any that look suspicious.
-    Uses multiple signals to avoid false positives.
+    Checks command line arguments for scripts with suspicious names.
     """
     print("  Scanning processes...")
     killed = []
@@ -39,18 +39,28 @@ def stop_encryption():
             pid     = proc.info["pid"]
             cmdline = " ".join(proc.info["cmdline"] or []).lower()
 
-            # Skip protected processes
-            if name in PROTECTED or pid < 100:
+            # Skip system critical processes
+            if pid < 100:
                 continue
 
-            # Check for suspicious keywords in name or command line
-            is_suspicious = any(
-                kw in name or kw in cmdline
-                for kw in SUSPICIOUS_KEYWORDS
+            # Skip protected BUT only if cmdline doesn't have suspicious script
+            is_suspicious_cmdline = any(
+                kw in cmdline for kw in SUSPICIOUS_KEYWORDS
             )
 
-            if is_suspicious:
+            # If it's a protected process running a SAFE script → skip
+            # If it's a protected process running a SUSPICIOUS script → kill
+            if name in PROTECTED and not is_suspicious_cmdline:
+                continue
+
+            # Check name OR cmdline for suspicious keywords
+            is_suspicious_name = any(
+                kw in name for kw in SUSPICIOUS_KEYWORDS
+            )
+
+            if is_suspicious_name or is_suspicious_cmdline:
                 print(f"  Terminating: {name} (PID {pid})")
+                print(f"  Reason     : {cmdline[:60]}...")
                 proc.terminate()
                 try:
                     proc.wait(timeout=3)
@@ -69,7 +79,6 @@ def stop_encryption():
         print("  No suspicious processes found to kill.")
 
     return killed
-
 
 def block_file_writes(directory: str):
     """
