@@ -37,6 +37,28 @@ Upon detecting suspicious activity, the system automatically:
 
 ---
 
+## Dataset Information
+
+The dataset used for this project is not included in the repository due to its large size.
+
+### Dataset Used:
+RanSAP 2022 Ransomware Behavioral Dataset
+
+### Source:
+https://www.kaggle.com/datasets/niharsachdeva/ransap-2022-ransomware-behavioral-features
+
+### Description:
+This dataset contains behavioral features of ransomware attacks, including:
+- File system operations  
+- Registry activity  
+- System-level logs  
+
+These features are used to analyze and detect ransomware behavior patterns.
+
+### Note:
+Model training was performed in the Kaggle environment due to computational requirements.
+
+
 ## 🧠 System Architecture
 
 ```
