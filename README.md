@@ -220,27 +220,24 @@ Stopping suspicious process...
 ## 📸 Output Screenshots
 
 ### 🔹 Screenshot 1 — System Start
-![Screenshot 1](screenshots/screenshot1.png)
 
+<img width="1918" height="908" alt="img1_CP" src="https://github.com/user-attachments/assets/e368a453-d448-4bbf-881a-95df5cab38f6" />
+           
 ---
 
 ### 🔹 Screenshot 2 — File Monitoring
-![Screenshot 2](screenshots/screenshot2.png)
+<img width="1919" height="906" alt="img4_CP" src="https://github.com/user-attachments/assets/64b05982-d61d-4794-99d3-437199715a75" />
 
 ---
 
-### 🔹 Screenshot 3 — Ransomware Detection
-![Screenshot 3](screenshots/screenshot3.png)
+### 🔹 Screenshot 3 — Prevention Trigger (Backup + Alert)
+<img width="1919" height="905" alt="img2_CP" src="https://github.com/user-attachments/assets/c4fef52c-51cb-4a72-975d-305cd4fa5259" />
+
 
 ---
 
-### 🔹 Screenshot 4 — Prevention Trigger (Backup + Alert)
-![Screenshot 4](screenshots/screenshot4.png)
-
----
-
-### 🔹 Screenshot 5 — System Response
-![Screenshot 5](screenshots/screenshot5.png)
+### 🔹 Screenshot 4 — System Response
+<img width="1894" height="693" alt="img3_CP" src="https://github.com/user-attachments/assets/9d901db1-6a93-40a1-aa20-53da8ced73d2" />
 
 ---
 
