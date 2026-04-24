@@ -1,11 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
 :root {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
   line-height: 1.6;
   font-weight: 400;
 
   color-scheme: dark;
-  color: #e2e8f0;
-  background-color: #0f172a;
+  color: #e8e5df;
+  background: linear-gradient(135deg, #0a1428 0%, #0f2847 50%, #0a1428 100%);
+  background-attachment: fixed;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -14,12 +17,14 @@
 }
 
 a {
-  font-weight: 500;
-  color: #2980b9;
-  text-decoration: inherit;
+  font-weight: 600;
+  color: #d4af37;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 a:hover {
-  color: #1a5276;
+  color: #f0d968;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
 }
 
 html {
@@ -37,31 +42,42 @@ body {
 }
 
 h1 {
-  font-size: 2.5em;
-  line-height: 1.2;
-  color: #1a252f;
+  font-family: 'Playfair Display', serif;
+  font-size: 3em;
+  line-height: 1.1;
+  color: #f0d968;
   margin: 0;
+  text-shadow: 0 2px 8px rgba(240, 217, 104, 0.1);
+}
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  color: #d4af37;
 }
 
 button {
-  border-radius: 6px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  border-radius: 8px;
+  border: 2px solid #d4af37;
+  padding: 0.8em 1.8em;
   font-size: 1em;
-  font-weight: 500;
+  font-weight: 600;
   font-family: inherit;
-  background-color: #2980b9;
-  color: white;
+  background: linear-gradient(135deg, #1a3a52 0%, #0d2236 100%);
+  color: #f0d968;
   cursor: pointer;
-  transition: all 0.25s;
+  transition: all 0.3s ease;
+  letter-spacing: 0.05em;
 }
 button:hover {
-  background-color: #1a5276;
-  box-shadow: 0 2px 8px rgba(41, 128, 185, 0.3);
+  background: linear-gradient(135deg, #d4af37 0%, #f0d968 100%);
+  color: #0a1428;
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+  transform: translateY(-2px);
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 2px solid #d4af37;
+  outline-offset: 2px;
 }
 
 
