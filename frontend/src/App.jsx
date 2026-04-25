@@ -1,6 +1,24 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
-const API_BASE = "http://127.0.0.1:5000";
+// Get API base URL from environment or window config
+const getApiBase = () => {
+  // Check for environment variable (build-time or runtime)
+  if (typeof window !== 'undefined' && window.__API_BASE__) {
+    return window.__API_BASE__;
+  }
+  // Check for import.meta.env (Vite environment variable)
+  if (import.meta.env.VITE_API_BASE) {
+    return import.meta.env.VITE_API_BASE;
+  }
+  // Production: use current origin (backend serves frontend)
+  if (import.meta.env.PROD) {
+    return window.location.origin;
+  }
+  // Development: use localhost
+  return "http://127.0.0.1:5000";
+};
+
+const API_BASE = getApiBase();
 const POLL_MS  = 3000;
 
 const Icons = {

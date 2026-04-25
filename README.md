@@ -13,6 +13,34 @@ Upon detecting suspicious activity, the system automatically:
 
 ---
 
+## 🚀 Quick Start
+
+### Development
+```bash
+# Install dependencies
+npm run backend-install
+npm run frontend-install
+
+# Run backend (Terminal 1)
+python backend/app.py
+
+# Run frontend (Terminal 2)
+npm run dev-frontend
+```
+
+### Production
+```bash
+# Build
+npm run build
+
+# Run
+python backend/app.py
+```
+
+See [QUICKSTART.md](QUICKSTART.md) for quick reference and [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment options.
+
+---
+
 ## 🎯 Key Features
 
 - ✅ Real-time file system monitoring  

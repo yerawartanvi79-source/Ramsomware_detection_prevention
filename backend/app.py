@@ -11,7 +11,7 @@ from collections import deque
 
 import numpy as np
 import joblib
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -259,8 +259,38 @@ def model_info():
         "threshold":    0.70,
     })
 
+# ── STATIC FILE SERVING (FRONTEND) ────────────────────────
+
+@app.route("/")
+def root():
+    """Serve the built React frontend"""
+    frontend_build = os.path.join(BASE_DIR, "frontend", "dist", "index.html")
+    if os.path.exists(frontend_build):
+        return send_from_directory(os.path.join(BASE_DIR, "frontend", "dist"), "index.html")
+    return ok({"message": "Frontend not built. Run 'npm run build' in frontend/ directory."})
+
+@app.route("/<path:path>")
+def serve_static(path):
+    """Serve static assets from frontend build"""
+    static_path = os.path.join(BASE_DIR, "frontend", "dist", path)
+    if os.path.exists(static_path):
+        if os.path.isfile(static_path):
+            return send_from_directory(os.path.join(BASE_DIR, "frontend", "dist"), path)
+        # Directory requested, serve index.html for SPA routing
+        return send_from_directory(os.path.join(BASE_DIR, "frontend", "dist"), "index.html")
+    # API route not found
+    return jsonify({
+        "success": False,
+        "error": "Endpoint not found",
+        "timestamp": datetime.now().isoformat()
+    }), 404
+
 @app.errorhandler(404)
 def not_found(e):
+    """Catch-all for SPA routing - serve index.html"""
+    frontend_build = os.path.join(BASE_DIR, "frontend", "dist", "index.html")
+    if os.path.exists(frontend_build):
+        return send_from_directory(os.path.join(BASE_DIR, "frontend", "dist"), "index.html")
     return err("Endpoint not found", 404)
 
 @app.errorhandler(500)

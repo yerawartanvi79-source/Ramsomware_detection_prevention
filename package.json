@@ -1,5 +1,28 @@
 {
+  "name": "ransomware-detection-prevention",
+  "version": "2.0.0",
+  "description": "RanSAP - Ransomware Detection & Prevention System",
+  "main": "backend/app.py",
+  "scripts": {
+    "frontend-install": "cd frontend && npm install",
+    "frontend-build": "cd frontend && npm run build",
+    "backend-install": "pip install -r requirements.txt",
+    "build": "npm run frontend-install && npm run frontend-build",
+    "start": "node -e \"console.log('Backend starts with: gunicorn --bind 0.0.0.0:5000 backend.app:app')\"",
+    "dev-frontend": "cd frontend && npm run dev",
+    "dev-backend": "python backend/app.py"
+  },
   "dependencies": {
     "all": "^0.0.0"
-  }
+  },
+  "devDependencies": {},
+  "keywords": [
+    "ransomware",
+    "detection",
+    "prevention",
+    "lstm",
+    "machine-learning"
+  ],
+  "author": "RanSAP Team",
+  "license": "MIT"
 }
